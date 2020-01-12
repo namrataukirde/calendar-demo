@@ -9,10 +9,11 @@ module Services
       "end"  => "end"
     }
 
-    attr_accessor :event_list, :task, :event
+    attr_accessor :event_list, :task, :event, :current_user
 
-    def initialize(event_list_response)
+    def initialize(event_list_response, current_user)
       @event_list = event_list_response
+      @current_user = current_user
       @task = nil
       @event = nil
     end
@@ -21,10 +22,15 @@ module Services
       event_list.each do |event|
         @event = event
         @task = Task.where(google_event_id: event["iCalUID"]).first_or_create
+        assign_user
         assign_field_values
         assign_date_field_values
         task.save
       end
+    end
+
+    def assign_user
+      task.user = current_user
     end
 
     def assign_field_values
