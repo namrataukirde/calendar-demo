@@ -3,5 +3,6 @@ class TasksController < ApplicationController
     res = Services::CalendarApi.new(current_user).get_request
     event_list = JSON.parse(res.body)
     Services::TaskBuilder.new(event_list["items"], current_user).create_or_update
+    @tasks = current_user.tasks
   end
 end
