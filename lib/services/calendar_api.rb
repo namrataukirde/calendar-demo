@@ -5,7 +5,12 @@ module Services
     # "https://www.googleapis.com/calendar/v3/users/me/calendarList"
     # "https://www.googleapis.com/calendar/v3/calendars/primary/events"
 
-    #replace User.first wuth current_user
+    attr_accessor :current_user
+
+    def initialize(current_user)
+      self.current_user = current_user
+    end
+
     def post_request
       req = post_req
 
@@ -35,7 +40,7 @@ module Services
     def request_with_headers
       request = get_req
       request['Content-Type'] = 'application/json'
-      request['Authorization'] = "Bearer #{User.first.token}"
+      request['Authorization'] = "Bearer #{current_user.token}"
       request
     end
 

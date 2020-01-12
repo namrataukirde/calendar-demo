@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   get '/callback', to: 'example#callback', as: 'callback'
 
   get '/calendars', to: 'example#calendars', as: 'calendars'
-
+  get '/tasks', to: 'tasks#fetch_and_list_calendar_events'
   root to: "home#show"
 end
